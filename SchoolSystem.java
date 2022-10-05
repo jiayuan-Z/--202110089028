@@ -1,0 +1,106 @@
+package git_1;
+import java.util.*;
+
+//报名入学接口
+interface ISignUp {
+	// 打印输出结果
+	public void print();
+
+	// 检查是否有 stuType对应的班级名额
+	// 如果没有剩余名额，请返回 false ，否则学生将报名进入该班级并返回 true
+	public boolean addStudent(int stuType);
+
+	// 解析命令行输入的参数（格式），如文档描述
+	public static IParams parse() throws Exception {
+		return null;
+	};
+}
+
+interface IParams {
+	// 获取大班名额
+	public int getBig();
+
+	// 获取中班名额
+	public int getMedium();
+
+	// 获取小班名额
+	public int getSmall();
+
+	// 获取入学序列，例如 [1 2 2 3] 表示依次报名入学一名大班、中班、中班、小班学生
+	public ArrayList<Integer> getPlanSignUp();
+}
+
+public class SchoolSystem implements ISignUp, IParams {
+	static Integer big;
+	static Integer medium;
+	static Integer small;
+
+	// 初始化各年级名额
+	SchoolSystem(Integer big, Integer medium, Integer small) {
+		this.big = big;
+		this.medium = medium;
+		this.small = small;
+	}
+
+	// 检查是否有 stuType对应的班级名额
+	// 如果没有剩余名额，请返回 false ，否则学生将报名进入该班级并返回 true
+	public boolean addStudent(int stuType) {
+		if (stuType != 0) {
+			return true;
+		}
+		// 检查是否有 stuType对应的班级名额
+		// 如果没有剩余名额，请返回 false ，否则学生将报名进入该班级并返回 true
+		else
+			return false;
+	}
+
+	// 打印输出结果
+	public void print() {
+		// System.out.print(addStudent(stuType));
+	}
+
+	// 解析命令行输入的参数（格式），如文档描述
+	public static IParams parse() throws Exception {
+
+		try {
+			IParams params = ISignUp.parse();
+			SchoolSystem sc = new SchoolSystem(params.getBig(), params.getMedium(), params.getSmall());
+		} catch (InputMismatchException e) {
+			System.out.println("error!输入参数格式错误!");
+		}
+		return null;
+	}
+
+	public int getBig() {
+		return big;
+	}
+
+	public int getMedium() {
+		return medium;
+	}
+
+	public int getSmall() {
+		return small;
+	}
+
+	// 获取入学序列，例如 [1 2 2 3] 表示依次报名入学一名大班、中班、中班、小班学生
+	public ArrayList<Integer> getPlanSignUp() {
+		
+		return null;
+	}
+
+	public static void main(String[] args) throws Exception {
+		Scanner in = new Scanner(System.in);
+		System.out.print("请分别输入各年级招生人数：");
+		IParams params = ISignUp.parse();// SchoolSystem.parse();
+		SchoolSystem sc = new SchoolSystem(params.getBig(), params.getMedium(), params.getSmall());
+		// 初始化各年级名额
+		ArrayList<Integer> plan = params.getPlanSignUp();
+		for (int i = 0; i < plan.size(); i++) {
+			sc.addStudent(plan.get(i));
+		}
+		sc.print();
+		in.close();
+	}
+
+}
